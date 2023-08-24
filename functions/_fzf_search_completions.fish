@@ -67,21 +67,21 @@ function _fzf_search_completions --description "Shell completion using fzf"
 
 		# If the common prefix includes a / we are completing a file path.
 		# Strip the prefix until the last / completely and later re-add it on the replaced token
-		set -l path_prefix (string match --regex --groups-only -- '^(.*/)[^/]*$' $common_prefix)
-		if test $status = 0
-			set -l path_prefix_length (string length -- $path_prefix)
-			set -l new_start (math 1 + $path_prefix_length)
-			for i in (seq (count $completions))
-				set completions[$i] (string sub -s $new_start -- $completions[$i])
-				set actual_completions[$i] (string sub -s $new_start -- $actual_completions[$i])
-			end
-
-			# We have a path-like prefix and will therefore strip this common prefix from all
-			# completions to un-clutter the menu.
-			set each_prefix (string sub -l $path_prefix_length -- $common_prefix)
-			set common_prefix_length (math $common_prefix_length - $path_prefix_length)
-			set common_prefix (string sub -s $new_start -- $common_prefix)
-		end
+# 		set -l path_prefix (string match --regex --groups-only -- '^(.*/)[^/]*$' $common_prefix)
+# 		if test $status = 0
+# 			set -l path_prefix_length (string length -- $path_prefix)
+# 			set -l new_start (math 1 + $path_prefix_length)
+# 			for i in (seq (count $completions))
+# 				set completions[$i] (string sub -s $new_start -- $completions[$i])
+# 				set actual_completions[$i] (string sub -s $new_start -- $actual_completions[$i])
+# 			end
+#
+# 			# We have a path-like prefix and will therefore strip this common prefix from all
+# 			# completions to un-clutter the menu.
+# 			set each_prefix (string sub -l $path_prefix_length -- $common_prefix)
+# 			set common_prefix_length (math $common_prefix_length - $path_prefix_length)
+# 			set common_prefix (string sub -s $new_start -- $common_prefix)
+# 		end
 
 		# Detect whether descriptions are present and the length of each completion.
 		set -l has_descriptions false
